@@ -3,11 +3,8 @@ const {Asset} = require('parcel-bundler');
 const preamble = "const riot = require('riot');\n";
 
 class RiotAsset extends Asset {
-  constructor(name, pkg, options) {
-    super(name, pkg, options);
-    this.type = 'js';
-  }
-  
+  type = 'js';
+
   async parse(inputCode) {
     const riotOpts = {};
     let code = compile(inputCode, riotOpts, this.name);
@@ -15,7 +12,7 @@ class RiotAsset extends Asset {
     this.contents = code;
   }
   
-  generate() {
+  async generate() {
     // Send to JS bundler
     return {
       'js': `module.exports = \`${this.contents}\``
